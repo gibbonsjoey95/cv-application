@@ -40,9 +40,9 @@ function App() {
         <div>
           <h2>Education History</h2>
           <ul>
-            {educationInfo.map((edu) => (
+            {educationInfo.map((edu, index) => (
               <li key={edu.id}>
-                <p>{edu.id}</p>
+                <p>{index + 1}</p>
                 <p>School: {edu.school}</p>
                 <p>Title of Study: {edu.titleOfStudy}</p>
                 <p>Start: {edu.startDate}</p>
