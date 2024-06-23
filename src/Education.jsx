@@ -8,14 +8,18 @@ function Education({ educationInfo, setEducationInfo }) {
   const [endDate, setEndDate] = useState('');
 
   const handleAddEducation = () => {
-    const newEduItem = new EducationalInfo(
-      school,
-      titleOfStudy,
-      startDate,
-      endDate
-    );
-    setEducationInfo([...educationInfo, newEduItem]);
-    console.log(educationInfo);
+    if (school && titleOfStudy && startDate && endDate) {
+      const newEduItem = new EducationalInfo(
+        school,
+        titleOfStudy,
+        startDate,
+        endDate
+      );
+      setEducationInfo([...educationInfo, newEduItem]);
+      console.log(educationInfo);
+    } else {
+      alert('Please fill out all fieldss');
+    }
   };
 
   return (
