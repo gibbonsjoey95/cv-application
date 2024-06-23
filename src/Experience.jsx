@@ -8,6 +8,14 @@ function Experience({ experienceInfo, setExperienceInfo }) {
   const [startJobDate, setStartJobDate] = useState('');
   const [endJobDate, setEndJobDate] = useState('');
 
+  const reset = () => {
+    setCompanyName('');
+    setPosition('');
+    setResponsibilities('');
+    setStartJobDate('');
+    setEndJobDate('');
+  };
+
   const handleAddExperience = () => {
     const newExpItem = new Job(
       companyName,
@@ -17,6 +25,7 @@ function Experience({ experienceInfo, setExperienceInfo }) {
       endJobDate
     );
     setExperienceInfo([...experienceInfo, newExpItem]);
+    reset();
   };
 
   return (
