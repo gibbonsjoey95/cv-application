@@ -58,7 +58,7 @@ function App() {
                 <p>Title of Study: {edu.titleOfStudy}</p>
                 <p>Start: {edu.startDate}</p>
                 <p>End: {edu.endDate}</p>
-                <button>Edit</button>
+                <button onClick={() => console.log(edu)}>Edit</button>
                 <button onClick={() => handleDeleteEducation(edu.id)}>
                   Delete
                 </button>
