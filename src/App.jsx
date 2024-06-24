@@ -11,6 +11,12 @@ function App() {
   const [educationInfo, setEducationInfo] = useState([]);
   const [experienceInfo, setExperienceInfo] = useState([]);
 
+  const [editEducation, setEditEducation] = useState(null);
+
+  const handleEditEducation = (edu) => {
+    setEditEducation(edu);
+  };
+
   const handleDeleteEducation = (id) => {
     const updatedEducationInfo = educationInfo.filter((edu) => edu.id !== id);
     setEducationInfo(updatedEducationInfo);
@@ -35,6 +41,8 @@ function App() {
       <Education
         educationInfo={educationInfo}
         setEducationInfo={setEducationInfo}
+        editEducation={editEducation}
+        setEditEducation={setEditEducation}
       />
       <Experience
         experienceInfo={experienceInfo}
@@ -58,7 +66,7 @@ function App() {
                 <p>Title of Study: {edu.titleOfStudy}</p>
                 <p>Start: {edu.startDate}</p>
                 <p>End: {edu.endDate}</p>
-                <button onClick={() => console.log(edu)}>Edit</button>
+                <button onClick={() => handleEditEducation(edu)}>Edit</button>
                 <button onClick={() => handleDeleteEducation(edu.id)}>
                   Delete
                 </button>

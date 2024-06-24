@@ -1,7 +1,12 @@
 import { EducationalInfo } from './educational_info';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-function Education({ educationInfo, setEducationInfo }) {
+function Education({
+  educationInfo,
+  setEducationInfo,
+  editEducation,
+  setEditEducation,
+}) {
   const [school, setSchool] = useState('');
   const [titleOfStudy, setTitleOfStudy] = useState('');
   const [startDate, setStartDate] = useState('');
@@ -14,20 +19,48 @@ function Education({ educationInfo, setEducationInfo }) {
     setEndDate('');
   };
 
+  const handleUpdateEducation = (updatedEdu) => {
+    const updatedEducationInfo = educationInfo.map((edu) =>
+      edu.id === updatedEdu.id ? updatedEdu : edu
+    );
+    setEducationInfo(updatedEducationInfo);
+    setEditEducation(null);
+  };
+
   const handleAddEducation = () => {
-    if (school && titleOfStudy && startDate && endDate) {
-      const newEduItem = new EducationalInfo(
+    if (editEducation) {
+      handleUpdateEducation({
+        ...editEducation,
         school,
         titleOfStudy,
         startDate,
-        endDate
-      );
-      setEducationInfo([...educationInfo, newEduItem]);
-      reset();
+        endDate,
+      });
     } else {
-      alert('Please fill out all fieldss');
+      if (school && titleOfStudy && startDate && endDate) {
+        const newEduItem = new EducationalInfo(
+          school,
+          titleOfStudy,
+          startDate,
+          endDate
+        );
+        setEducationInfo([...educationInfo, newEduItem]);
+      }
+      reset();
     }
   };
+
+  useEffect(() => {
+    if (editEducation) {
+      setSchool(editEducation.school);
+      setTitleOfStudy(editEducation.titleOfStudy);
+      setStartDate(editEducation.startDate);
+      setEndDate(editEducation.endDate);
+      // setEditEducation(null);
+    } else {
+      reset();
+    }
+  }, [editEducation]);
 
   return (
     <>
