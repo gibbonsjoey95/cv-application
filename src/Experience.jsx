@@ -1,7 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Job } from './job';
 
-function Experience({ experienceInfo, setExperienceInfo }) {
+function Experience({
+  experienceInfo,
+  setExperienceInfo,
+  editExperience,
+  setEditExperience,
+}) {
   const [companyName, setCompanyName] = useState('');
   const [position, setPosition] = useState('');
   const [responsibilities, setResponsibilities] = useState('');
@@ -16,17 +21,48 @@ function Experience({ experienceInfo, setExperienceInfo }) {
     setEndJobDate('');
   };
 
-  const handleAddExperience = () => {
-    const newExpItem = new Job(
-      companyName,
-      position,
-      responsibilities,
-      startJobDate,
-      endJobDate
+  const handleUpdateExperience = (updatedExp) => {
+    const updatedExperienceInfo = experienceInfo.map((exp) =>
+      exp.id === updatedExp.id ? updatedExp : exp
     );
-    setExperienceInfo([...experienceInfo, newExpItem]);
+    setExperienceInfo(updatedExperienceInfo);
+    setEditExperience(null);
+  };
+
+  const handleAddExperience = () => {
+    if (editExperience) {
+      handleUpdateExperience({
+        ...editExperience,
+        companyName,
+        position,
+        responsibilities,
+        startJobDate,
+        endJobDate,
+      });
+    } else {
+      const newExpItem = new Job(
+        companyName,
+        position,
+        responsibilities,
+        startJobDate,
+        endJobDate
+      );
+      setExperienceInfo([...experienceInfo, newExpItem]);
+    }
     reset();
   };
+
+  useEffect(() => {
+    if (editExperience) {
+      setCompanyName(editExperience.companyName);
+      setPosition(editExperience.position);
+      setResponsibilities(editExperience.responsibilities);
+      setStartJobDate(editExperience.startDate);
+      setEndJobDate(editExperience.endDate);
+    } else {
+      reset();
+    }
+  }, [editExperience]);
 
   return (
     <>

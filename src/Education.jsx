@@ -56,7 +56,6 @@ function Education({
       setTitleOfStudy(editEducation.titleOfStudy);
       setStartDate(editEducation.startDate);
       setEndDate(editEducation.endDate);
-      // setEditEducation(null);
     } else {
       reset();
     }
